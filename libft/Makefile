@@ -6,7 +6,7 @@
 #    By: jnederlo <jnederlo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/03/02 13:41:01 by jnederlo          #+#    #+#              #
-#    Updated: 2017/07/29 14:57:06 by jnederlo         ###   ########.fr        #
+#    Updated: 2017/07/31 15:03:33 by jnederlo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -123,10 +123,10 @@ fclean: clean
 re: fclean all
 
 $(NAME): $(OBJECTS)
-	ar rcs $@ $(OBJECTS)
+	@ar rcs $@ $(OBJECTS)
 
 build:
 	@mkdir build/
 
 build/%.o: srcs/%.c | build
-	$(CC) $(FLAGS) -c $< -o $@
+	@$(CC) $(FLAGS) -c $< -o $@

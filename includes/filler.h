@@ -6,15 +6,15 @@
 /*   By: jnederlo <jnederlo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/29 13:02:00 by jnederlo          #+#    #+#             */
-/*   Updated: 2017/07/30 20:37:52 by jnederlo         ###   ########.fr       */
+/*   Updated: 2017/07/31 15:32:45 by jnederlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FILLER_H
 # define FILLER_H
 
-# include "libft/includes/libft.h"
-# include "libft/includes/ft_printf.h"
+# include "../libft/includes/libft.h"
+# include "../libft/includes/ft_printf.h"
 
 typedef struct		s_last
 {
@@ -29,7 +29,7 @@ typedef struct		s_grid
 	int		n_rows;
 	int		n_cols;
 	char	**map;
-	t_start	*last;
+	t_last	*last;
 }					t_grid;
 
 typedef struct		s_filler
@@ -39,12 +39,32 @@ typedef struct		s_filler
 	char	**piece;
 }					t_filler;
 
-extern char			g_opp;
-extern char			g_me;
+/*
+**	These are global variables:
+*/
 
+char				g_opp;
+char				g_me;
 
+/*
+**	Functions in ft_filler.c
+**	(includes the main())
+*/
+
+void				setup();
+
+/*
+**	Functions in setup.c
+*/
 
 void				set_player(char *line);
+void				init_last(char *line, t_grid *grid);
+void				init_map(t_grid *grid);
 
+/*
+**	Functions in print_grid.c
+*/
+
+void				print_grid(t_grid *grid);
 
 #endif
