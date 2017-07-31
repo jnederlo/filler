@@ -6,7 +6,7 @@
 /*   By: jnederlo <jnederlo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/29 13:02:00 by jnederlo          #+#    #+#             */
-/*   Updated: 2017/07/30 17:27:57 by jnederlo         ###   ########.fr       */
+/*   Updated: 2017/07/30 20:37:52 by jnederlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,28 @@
 # include "libft/includes/libft.h"
 # include "libft/includes/ft_printf.h"
 
-typedef struct		s_start
+typedef struct		s_last
 {
 	int	row_O;
 	int	col_O;
 	int	row_X;
 	int	col_X;
-}					t_start;
+}					t_last;
 
 typedef struct		s_grid
 {
 	int		n_rows;
 	int		n_cols;
-	t_start	*start;
+	char	**map;
+	t_start	*last;
 }					t_grid;
+
+typedef struct		s_filler
+{
+	t_grid	*grid;
+	t_last	*last;
+	char	**piece;
+}					t_filler;
 
 extern char			g_opp;
 extern char			g_me;
