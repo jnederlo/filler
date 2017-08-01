@@ -6,7 +6,7 @@
 /*   By: jnederlo <jnederlo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/29 12:29:22 by jnederlo          #+#    #+#             */
-/*   Updated: 2017/07/31 15:15:31 by jnederlo         ###   ########.fr       */
+/*   Updated: 2017/07/31 16:49:32 by jnederlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,12 @@ int	main()
 	// }
 	return (0);
 }
+
+
+
+
+
+
 
 /*
 **	setup() will call set_player() which determines if I'm p1 or p2.
