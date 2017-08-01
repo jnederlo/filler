@@ -6,7 +6,7 @@
 /*   By: jnederlo <jnederlo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/31 14:16:12 by jnederlo          #+#    #+#             */
-/*   Updated: 2017/07/31 18:15:19 by jnederlo         ###   ########.fr       */
+/*   Updated: 2017/07/31 20:36:48 by jnederlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,15 @@ void	init_map(t_grid *grid)
 	int	col;
 
 	row = -1;
-	grid->map = malloc(sizeof(int *) * grid->n_rows + 1);
-	while (row++ < grid->n_rows)
+	// grid->map = malloc((grid->n_rows + 1) * sizeof(int *) + ((grid->n_rows + 1) * ((grid->n_cols + 1) * sizeof(int))));
+	grid->map = malloc(sizeof(int *) * grid->n_rows + 2);
+	while (row++ < (grid->n_rows + 2))
 		grid->map[row] = malloc(sizeof(int) * grid->n_cols + 2);
 	row = 0;
 	while (row < (grid->n_rows + 1))
 	{
 		col = 0;
-		while (col < (grid->n_cols + 1))
+		while (col < (grid->n_cols + 2))
 		{
 			grid->map[row][col] = fibonacci(row, col, grid);
 			col++;
@@ -79,13 +80,17 @@ int		fibonacci(int row, int col, t_grid *grid)
 {
 	long int	opp;
 	long int	num;
+	int			last_row;
+	int			last_col;
 
+	last_row = grid->n_rows + 1;
+	last_col = grid->n_cols + 1;
 	opp = -1 * (grid->n_rows * grid->n_rows) * (grid->n_cols * grid->n_cols);
-	if (row == 0 || col == 0)
+	if (row == 0 || col == 0 || row == last_row + 1 || col == last_col + 1)
 		return (opp);
 	// else if (row == grid->last->row_O && col == grid->last->col_O)
 	// 	return (opp);
-	else if (row == 1 || col == 1 || row == 2 || col == 2)
+	else if (row == 1 || col == 1 || row == 2 || col == 2 || row == last_row || row == last_row - 1 || col == last_col || col == last_col - 1)
 		return (1);
 	else
 	{
