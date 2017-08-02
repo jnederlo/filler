@@ -6,7 +6,7 @@
 /*   By: jnederlo <jnederlo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/29 12:29:22 by jnederlo          #+#    #+#             */
-/*   Updated: 2017/07/31 16:49:32 by jnederlo         ###   ########.fr       */
+/*   Updated: 2017/08/01 15:12:59 by jnederlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	setup()
 	t_grid	*grid;
 
 	i = 0;
-	grid = ft_memalloc(sizeof(t_grid));//maybe ft_memalloc();
+	grid = ft_memalloc(sizeof(t_grid));
 	while (get_next_line(0, &line))
 	{
 		set_player(line);//sets the player

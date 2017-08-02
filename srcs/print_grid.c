@@ -6,7 +6,7 @@
 /*   By: jnederlo <jnederlo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/31 14:17:28 by jnederlo          #+#    #+#             */
-/*   Updated: 2017/07/31 20:36:10 by jnederlo         ###   ########.fr       */
+/*   Updated: 2017/08/01 15:58:39 by jnederlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	print_grid(t_grid *grid)
 	int j;
 
 	i = 0;
-	while (i < (grid->n_rows + 1))
+	while (i < (grid->n_rows + 2))
 	{
 		j = 0;
 		ft_putchar(' ');
