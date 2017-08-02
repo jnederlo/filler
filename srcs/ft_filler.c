@@ -6,7 +6,7 @@
 /*   By: jnederlo <jnederlo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/29 12:29:22 by jnederlo          #+#    #+#             */
-/*   Updated: 2017/08/02 13:01:13 by jnederlo         ###   ########.fr       */
+/*   Updated: 2017/08/02 14:46:46 by jnederlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,48 +27,52 @@ int	main()
 void	update_map(t_grid *grid)
 {
 	char	*line;
-	int		i;
 	int		row;
 	int		col;
-	int		j;
 
-	i = 0;
+	row = 0;
 	while (get_next_line(0, &line))
 	{
 		if (g_opp == 'O' && ft_strstr(line, "got (O)"))
 		{
-			i = 11;
-			row = ft_atoi(&line[i]);
-			i += ft_count_digits(row) + 2;
-			col = ft_atoi(&line[i]);
-			ft_printf("(row, col) = (%d, %d)\n", row, col);
-			i = 0;
-			while (i < grid->piece_row)
-			{
-				j = 0;
-				while (j < grid->piece_col)
-				{
-					if (grid->piece[i][j] == 0)
-					{
-						j++;
-						col++;
-					}
-					else
-					{
-						grid->map[row][col] = g_opp_min;
-						j++;
-						col++;
-					}
-				}
-				i++;
-				row++;
-			}
+			line += 11;
+			row = ft_atoi(line);
+			line += ft_count_digits(row) + 2;
+			col = ft_atoi(line);
+			opp_place(grid, row, col);
 		}
 		print_grid(grid);
-		free(line);
+		free(line - (11 + ft_count_digits(row) + 2));
 		return ;
 	}
 }
+
+void	opp_place(t_grid *grid, int row, int col)
+{
+	int	i;
+	int	j;
+	int	col_start;
+
+	col_start = col;
+	i = -1;
+	while (++i < grid->piece_row)
+	{
+		j = -1;
+		col = col_start;
+		while (j++ < grid->piece_col)
+		{
+			if (grid->piece[i][j++] == 0)
+				col++;
+			else
+			{
+				grid->map[row][col++] = g_opp_min;
+				j++;
+			}
+		}
+		row++;
+	}
+}
+
 
 /*
 **	setup() will call set_player() which determines if I'm p1 or p2.

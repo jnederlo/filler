@@ -6,7 +6,7 @@
 /*   By: jnederlo <jnederlo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/29 13:02:00 by jnederlo          #+#    #+#             */
-/*   Updated: 2017/08/02 12:55:46 by jnederlo         ###   ########.fr       */
+/*   Updated: 2017/08/02 14:38:22 by jnederlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ void				update_map(t_grid *grid);
 void				set_player(char *line);
 void				set_piece(char *line, t_grid *grid);
 void				init_piece(char *line, t_grid *grid, int i, int row);
+void				opp_place(t_grid *grid, int row, int col);
 
 /*
 **	Functions in setup.c
