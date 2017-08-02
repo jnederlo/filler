@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jnederlo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jnederlo <jnederlo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/12 12:07:38 by jnederlo          #+#    #+#             */
-/*   Updated: 2017/03/12 17:31:46 by jnederlo         ###   ########.fr       */
+/*   Updated: 2017/08/01 18:49:59 by jnederlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@
 
 #include "../includes/libft.h"
 
-char	*ft_itoa(int n)
+char	*ft_itoa(long long int n)
 {
-	char			*p;
-	unsigned int	nb;
-	size_t			length;
+	char					*p;
+	unsigned long long int	nb;
+	size_t					length;
 
 	length = ft_count_digits(n);
 	nb = n;

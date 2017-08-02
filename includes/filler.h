@@ -6,7 +6,7 @@
 /*   By: jnederlo <jnederlo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/29 13:02:00 by jnederlo          #+#    #+#             */
-/*   Updated: 2017/08/01 16:28:32 by jnederlo         ###   ########.fr       */
+/*   Updated: 2017/08/01 18:25:33 by jnederlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,13 @@ typedef struct		s_last
 
 typedef struct		s_grid
 {
-	int		n_rows;
-	int		n_cols;
-	int		last_row;
-	int		last_col;
-	int		mid_row;
-	int		mid_col;
-	int		**map;
+	int				n_rows;
+	int				n_cols;
+	int				last_row;
+	int				last_col;
+	int				mid_row;
+	int				mid_col;
+	long long int	**map;
 	t_last	*last;
 }					t_grid;
 
@@ -68,14 +68,14 @@ void				init_map(t_grid *grid);
 
 
 void				fibonacci(int row, int col, t_grid *grid);
-int					fib_border(int row, int col, t_grid *grid);
-int					fib_filler(int row, int col, t_grid *grid);
+long long int					fib_border(int row, int col, t_grid *grid);
+long long int					fib_filler(int row, int col, t_grid *grid);
 
 
-int					fib_q1(int row, int col, t_grid *grid);
-int					fib_q2(int row, int col, t_grid *grid);
-int					fib_q3(int row, int col, t_grid *grid);
-int					fib_bot_half(int row, int col, t_grid *grid);
+long long int					fib_q1(int row, int col, t_grid *grid);
+long long int					fib_q2(int row, int col, t_grid *grid);
+long long int					fib_q3(int row, int col, t_grid *grid);
+long long int					fib_q4(int row, int col, t_grid *grid);
 
 
 

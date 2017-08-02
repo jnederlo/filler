@@ -6,7 +6,7 @@
 /*   By: jnederlo <jnederlo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/31 14:16:12 by jnederlo          #+#    #+#             */
-/*   Updated: 2017/08/01 17:16:05 by jnederlo         ###   ########.fr       */
+/*   Updated: 2017/08/01 18:36:32 by jnederlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,10 @@ void	init_map(t_grid *grid)
 
 	row = -1;
 	col = 0;
-	grid->map = malloc(sizeof(int *) * (grid->n_rows + 2));
+	grid->map = malloc(sizeof(long long int *) * (grid->n_rows + 2));
 	ft_bzero(grid->map, grid->n_rows + 2);
 	while (row++ < (grid->n_rows + 2))
-		grid->map[row] = ft_memalloc(sizeof(int) * (grid->n_cols + 2));
+		grid->map[row] = ft_memalloc(sizeof(long long int) * (grid->n_cols + 2));
 	row = 0;
 	init_rows_cols(grid);
 	fibonacci(row, col, grid);
@@ -94,11 +94,11 @@ void	fibonacci(int row, int col, t_grid *grid)
 	}
 }
 
-int		fib_border(int row, int col, t_grid *grid)
+long long int		fib_border(int row, int col, t_grid *grid)
 {
-	long int	opp;
-	int			last_row;
-	int			last_col;
+	long long int	opp;
+	int				last_row;
+	int				last_col;
 
 	last_row = grid->last_row;
 	last_col = grid->last_col;
@@ -121,7 +121,7 @@ void	init_rows_cols(t_grid *grid)
 	ft_printf("mid (row, col) = (%d, %d)\n", grid->mid_row, grid->mid_col);
 }
 
-int		fib_filler(int row, int col, t_grid *grid)
+long long int		fib_filler(int row, int col, t_grid *grid)
 {
 	int	last_row;
 	int	last_col;
@@ -134,15 +134,17 @@ int		fib_filler(int row, int col, t_grid *grid)
 	mid_col = grid->mid_col;
 	// else if (row == grid->last->row_O && col == grid->last->col_O)
 	// 	return (opp);
-	if (row <= mid_row && col >= mid_col)
+	if (row <= mid_row && col > mid_col)
 		return (fib_q2(row, col, grid));
-	else if (row > mid_row)
-		return (fib_bot_half(row, col, grid));
+	else if (row > mid_row && col <= mid_col)
+		return (fib_q3(row, col, grid));
+	else if (row > mid_row && col >= mid_col)
+		return (fib_q4(row, col, grid));
 	else
 		return (fib_q1(row, col, grid));
 }
 
-int		fib_q1(int row, int col, t_grid *grid)
+long long int		fib_q1(int row, int col, t_grid *grid)
 {
 	if ((grid->map[row][col - 1] + grid->map[row][col - 2]) <
 		(grid->map[row - 1][col] + grid->map[row - 2][col]))
@@ -151,29 +153,44 @@ int		fib_q1(int row, int col, t_grid *grid)
 		return (grid->map[row - 1][col] + grid->map[row - 2][col]);
 }
 
-int		fib_q2(int row, int col, t_grid *grid)
+long long int		fib_q2(int row, int col, t_grid *grid)
 {
-	if (row == grid->mid_row && col > (grid->mid_col + 1))
-		return (grid->map[row - 1][col]);
-	else if (grid->map[row][col + 1] == 0)
-		return (fib_q1(row, col, grid));
+	// if (row == grid->mid_row && col > (grid->mid_col + 1))
+	// 	return (grid->map[row - 1][col]);
+	if (grid->map[row][col + 1] == 0)
+	{
+		if (grid->mid_col % 2 == 0)
+			col -= (col - grid->mid_col) * 2 - 1;
+		else
+			col -= (col - grid->mid_col) * 2;
+		return (grid->map[row][col]);
+	}
 	else
 		return (grid->map[row][col + 1] + grid->map[row][col + 2]);
 }
 
-// int		fib_q3(int row, int col, t_grid *grid)
-// {
-// 	if (grid->map[row + 1][col] == 0)
-// 		return (fib_q1(row, col, grid));
-// 	else
-// 		return (grid->map[row + 1][col] + grid->map[row + 2][col]);
-// }
-
-int		fib_bot_half(int row, int col, t_grid *grid)
+long long int		fib_q4(int row, int col, t_grid *grid)
 {
-	if (grid->map[row][col + 1] == 0 || grid->map[row + 1][col] == 0)
+	if (grid->map[row + 1][col] == 0)
 	{
-		row -= (row - grid->mid_row) * 2;
+		if (grid->mid_col % 2 == 0)
+			col -= (col - grid->mid_col) * 2 - 1;
+		else
+			col -= (col - grid->mid_col) * 2;
+		return (grid->map[row][col]);
+	}
+	else
+		return (grid->map[row + 1][col] + grid->map[row + 2][col]);
+}
+
+long long int		fib_q3(int row, int col, t_grid *grid)
+{
+	if (grid->map[row][col + 1] == 0 && grid->map[row + 1][col] == 0)
+	{
+		if (grid->mid_row % 2 == 0)
+			row -= (row - grid->mid_row) * 2 - 1;
+		else
+			row -= (row - grid->mid_row) * 2;
 		return (grid->map[row][col]);
 	}
 	else

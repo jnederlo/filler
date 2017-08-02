@@ -6,7 +6,7 @@
 /*   By: jnederlo <jnederlo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/12 17:58:50 by jnederlo          #+#    #+#             */
-/*   Updated: 2017/07/29 14:40:50 by jnederlo         ###   ########.fr       */
+/*   Updated: 2017/08/01 18:50:39 by jnederlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void				ft_strdel(char **as);
 void				ft_strclr(char *s);
 int					ft_strequ(char const *s1, char const *s2);
 int					ft_strnequ(char const *s1, char const *s2, size_t n);
-char				*ft_itoa(int n);
+char				*ft_itoa(long long int n);
 char				**ft_strsplit(char const *s, char c);
 char				*ft_linetrim(char *s, char c);
 char				*ft_linestrip(char *s, char c);
