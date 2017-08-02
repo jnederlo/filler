@@ -6,23 +6,13 @@
 /*   By: jnederlo <jnederlo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/31 14:16:12 by jnederlo          #+#    #+#             */
-/*   Updated: 2017/08/01 18:36:32 by jnederlo         ###   ########.fr       */
+/*   Updated: 2017/08/02 12:18:24 by jnederlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 
-void	set_player(char *line)
-{
-	if (ft_strstr(line, "jarvis.filler"))//set string to whatever I call my exec.
-	{
-		g_opp = (ft_strstr(line, "p1")) ? 'X' : 'O';
-		g_me = (ft_strstr(line, "p1")) ? 'O' : 'X';
-		ft_printf("opp = %c, me = %c\n", g_opp, g_me);
-	}
-}
-
-void	init_last(char *line, t_grid *grid)
+t_last	*init_last(char *line, t_grid *grid)
 {
 	t_last	*last;
 	int		i;
@@ -50,9 +40,10 @@ void	init_last(char *line, t_grid *grid)
 	free(line);
 	ft_printf("last O = (%d, %d)\n", last->row_O, last->col_O);
 	ft_printf("last X = (%d, %d)\n", last->row_X, last->col_X);
+	return (last);
 }
 
-void	init_map(t_grid *grid)
+void	init_map(t_grid *grid, t_last *last)
 {
 	int	row;
 	int	col;
@@ -62,11 +53,21 @@ void	init_map(t_grid *grid)
 	grid->map = malloc(sizeof(long long int *) * (grid->n_rows + 2));
 	ft_bzero(grid->map, grid->n_rows + 2);
 	while (row++ < (grid->n_rows + 2))
-		grid->map[row] = ft_memalloc(sizeof(long long int) * (grid->n_cols + 2));
+		grid->map[row] = ft_memalloc(sizeof(long long) * (grid->n_cols + 2));
 	row = 0;
 	init_rows_cols(grid);
 	fibonacci(row, col, grid);
+	init_players(grid, last);
 	print_grid(grid);
+}
+
+void	init_rows_cols(t_grid *grid)
+{
+	grid->last_row = grid->n_rows + 1;
+	grid->last_col = grid->n_cols + 1;
+	grid->mid_row = grid->n_rows % 2 ? grid->n_rows / 2 + 1 : grid->n_rows / 2;
+	grid->mid_col = grid->n_cols % 2 ? grid->n_cols / 2 + 1 : grid->n_cols / 2;
+	ft_printf("mid (row, col) = (%d, %d)\n", grid->mid_row, grid->mid_col);
 }
 
 void	fibonacci(int row, int col, t_grid *grid)
@@ -94,105 +95,18 @@ void	fibonacci(int row, int col, t_grid *grid)
 	}
 }
 
-long long int		fib_border(int row, int col, t_grid *grid)
+void	init_players(t_grid *grid, t_last *last)
 {
-	long long int	opp;
-	int				last_row;
-	int				last_col;
-
-	last_row = grid->last_row;
-	last_col = grid->last_col;
-	opp = -1 * (grid->n_rows * grid->n_rows) * (grid->n_cols * grid->n_cols);
-	if (row == 0 || col == 0 || row == last_row || col == last_col)
-		return (opp);
-	else if (row == 1 || col == 1 || row == 2 || col == 2 || row == last_row - 1
-			|| row == last_row - 2 || col == last_col - 1 || col == last_col - 2)
-		return (1);
-	else
-		return (0);
-}
-
-void	init_rows_cols(t_grid *grid)
-{
-	grid->last_row = grid->n_rows + 1;
-	grid->last_col = grid->n_cols + 1;
-	grid->mid_row = grid->n_rows % 2 ? grid->n_rows / 2 + 1 : grid->n_rows / 2;
-	grid->mid_col = grid->n_cols % 2 ? grid->n_cols / 2 + 1 : grid->n_cols / 2;
-	ft_printf("mid (row, col) = (%d, %d)\n", grid->mid_row, grid->mid_col);
-}
-
-long long int		fib_filler(int row, int col, t_grid *grid)
-{
-	int	last_row;
-	int	last_col;
-	int	mid_row;
-	int	mid_col;
-
-	last_row = grid->last_row;
-	last_col = grid->last_col;
-	mid_row = grid->mid_row;
-	mid_col = grid->mid_col;
-	// else if (row == grid->last->row_O && col == grid->last->col_O)
-	// 	return (opp);
-	if (row <= mid_row && col > mid_col)
-		return (fib_q2(row, col, grid));
-	else if (row > mid_row && col <= mid_col)
-		return (fib_q3(row, col, grid));
-	else if (row > mid_row && col >= mid_col)
-		return (fib_q4(row, col, grid));
-	else
-		return (fib_q1(row, col, grid));
-}
-
-long long int		fib_q1(int row, int col, t_grid *grid)
-{
-	if ((grid->map[row][col - 1] + grid->map[row][col - 2]) <
-		(grid->map[row - 1][col] + grid->map[row - 2][col]))
-		return (grid->map[row][col - 1] + grid->map[row][col - 2]);
-	else
-		return (grid->map[row - 1][col] + grid->map[row - 2][col]);
-}
-
-long long int		fib_q2(int row, int col, t_grid *grid)
-{
-	// if (row == grid->mid_row && col > (grid->mid_col + 1))
-	// 	return (grid->map[row - 1][col]);
-	if (grid->map[row][col + 1] == 0)
+	g_opp_min = -1 * (grid->n_rows * grid->n_rows) * (grid->n_cols * grid->n_cols);
+	g_me_max = grid->map[grid->mid_row][grid->mid_col] + 1;
+	if (g_opp == 'O')
 	{
-		if (grid->mid_col % 2 == 0)
-			col -= (col - grid->mid_col) * 2 - 1;
-		else
-			col -= (col - grid->mid_col) * 2;
-		return (grid->map[row][col]);
+		grid->map[last->row_O][last->col_O] = g_opp_min;
+		grid->map[last->row_X][last->col_X] = g_me_max;
 	}
 	else
-		return (grid->map[row][col + 1] + grid->map[row][col + 2]);
-}
-
-long long int		fib_q4(int row, int col, t_grid *grid)
-{
-	if (grid->map[row + 1][col] == 0)
 	{
-		if (grid->mid_col % 2 == 0)
-			col -= (col - grid->mid_col) * 2 - 1;
-		else
-			col -= (col - grid->mid_col) * 2;
-		return (grid->map[row][col]);
+		grid->map[last->row_O][last->col_O] = g_me_max;
+		grid->map[last->row_X][last->col_X] = g_opp_min;
 	}
-	else
-		return (grid->map[row + 1][col] + grid->map[row + 2][col]);
-}
-
-long long int		fib_q3(int row, int col, t_grid *grid)
-{
-	if (grid->map[row][col + 1] == 0 && grid->map[row + 1][col] == 0)
-	{
-		if (grid->mid_row % 2 == 0)
-			row -= (row - grid->mid_row) * 2 - 1;
-		else
-			row -= (row - grid->mid_row) * 2;
-		return (grid->map[row][col]);
-	}
-	else
-		return (grid->map[row + 1][col] + grid->map[row + 2][col]);
 }

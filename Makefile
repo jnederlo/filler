@@ -6,7 +6,7 @@
 #    By: jnederlo <jnederlo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/07/31 14:23:31 by jnederlo          #+#    #+#              #
-#    Updated: 2017/07/31 15:19:35 by jnederlo         ###   ########.fr        #
+#    Updated: 2017/08/02 11:07:17 by jnederlo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,8 @@ LIBRARY_B	=	libft/build
 LIB_A		=	libft.a
 FILES		=	ft_filler.c \
 				setup.c \
+				fibonacci.c \
+				fib_q.c \
 				print_grid.c \
 
 #adding a dependency on the include files.
@@ -35,11 +37,11 @@ all:	$(NAME)
 
 clean:
 	@rm -rf build
-#	@rm -rf $(LIBRARY_B)
+	@rm -rf $(LIBRARY_B)
 
 fclean: clean
 	@rm -f $(NAME)
-#	@rm -f $(LIB_A)
+	@rm -f $(LIB_A)
 
 re: fclean all
 
@@ -50,7 +52,7 @@ $(NAME): $(OBJECTS)
 	$(MESS_BLANK)
 	$(MESS_EXEC)
 	$(MESS_BLANK)
-	@$(CC) -o $@ $(FLAGS) $(OBJECTS) -L $(LIBRARY) -lft
+	@$(CC) -o $@ $(FLAGS) $(OBJECTS) -L $(LIBRARY) -lft -fsanitize=address
 	$(MESS_SUCCESS)
 	$(MESS_BLANK)
 
@@ -58,4 +60,4 @@ build:
 	@mkdir build/
 
 build/%.o: srcs/%.c | build
-	@$(CC) $(FLAGS) -c $< -o $@
+	@$(CC) $(FLAGS) -c $< -o $@ -g
