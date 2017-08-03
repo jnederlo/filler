@@ -6,7 +6,7 @@
 /*   By: jnederlo <jnederlo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/29 12:29:22 by jnederlo          #+#    #+#             */
-/*   Updated: 2017/08/02 17:24:05 by jnederlo         ###   ########.fr       */
+/*   Updated: 2017/08/02 19:49:23 by jnederlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,40 @@
 int	main()
 {
 	t_grid	*grid;
+	char	*line;
+	int		i;
 
 	turn = 1;
+	i = 0;
 	grid = setup();
-	while (1)
+	while (turn < 3)
 	{
 		update_map(grid);
+		clear_piece(grid);
+		get_next_line(0, &line);
+		while (i < (grid->last_row + 1))
+		{
+			get_next_line(0, &line);
+			if (ft_strstr(line, "Piece"))
+				set_piece(line, grid);
+			i++;
+		}
 		turn++;
 	}
 	return (0);
+}
+
+void	clear_piece(t_grid *grid)
+{
+	int	i;
+
+	i = 0;
+	while (i < grid->piece_row)
+	{
+		free(grid->piece[i]);
+		i++;
+	}
+	free(grid->piece);
 }
 
 void	update_map(t_grid *grid)
@@ -33,13 +58,11 @@ void	update_map(t_grid *grid)
 	int		col;
 
 	row = 0;
-	if (g_opp == 'O' && turn % 2 == 0)
-		me_place(grid);
-	else
+	if ((g_opp == 'O' && (turn % 2) == 1) || (g_me == 'O' && (turn % 2) == 0))
 	{
 		while (get_next_line(0, &line))
 		{
-			if (ft_strstr(line, "got (O)"))
+			if (ft_strstr(line, "got"))
 			{
 				line += 11;
 				row = ft_atoi(line) + 1;
@@ -53,12 +76,22 @@ void	update_map(t_grid *grid)
 			return ;
 		}
 	}
+	else
+		me_place(grid);
 }
 
 void	me_place(t_grid *grid)
 {
 	(void)grid;
+	//print_grid(grid);
 }
+
+// int		valid_place(t_grid *grid)
+// {
+
+
+
+// }
 
 void	opp_place(t_grid *grid, int row, int col)
 {
@@ -82,7 +115,6 @@ void	opp_place(t_grid *grid, int row, int col)
 		row++;
 	}
 }
-
 
 /*
 **	setup() will call set_player() which determines if I'm p1 or p2.
@@ -145,7 +177,7 @@ void	init_piece(char *line, t_grid *grid, int i, int row)
 	{
 		i = 0;
 		get_next_line(0, &line);
-		if (g_me == 'O')
+		if ((g_me_num == 2 && turn % 2) || (g_me_num == 1 && (turn % 2) == 1))
 		{
 			while (line[i])
 			{
@@ -174,6 +206,8 @@ void	set_player(char *line)
 	{
 		g_opp = (ft_strstr(line, "p1")) ? 'X' : 'O';
 		g_me = (ft_strstr(line, "p1")) ? 'O' : 'X';
+		g_opp_num = g_opp == 'O' ? 1 : 2;
+		g_me_num = g_me == 'O' ? 1 : 2;
 		ft_printf("opp = %c, me = %c\n", g_opp, g_me);
 	}
 }
