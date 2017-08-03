@@ -6,7 +6,7 @@
 /*   By: jnederlo <jnederlo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/29 12:29:22 by jnederlo          #+#    #+#             */
-/*   Updated: 2017/08/02 14:46:46 by jnederlo         ###   ########.fr       */
+/*   Updated: 2017/08/02 17:24:05 by jnederlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,12 @@ int	main()
 {
 	t_grid	*grid;
 
+	turn = 1;
 	grid = setup();
 	while (1)
 	{
 		update_map(grid);
+		turn++;
 	}
 	return (0);
 }
@@ -31,20 +33,31 @@ void	update_map(t_grid *grid)
 	int		col;
 
 	row = 0;
-	while (get_next_line(0, &line))
+	if (g_opp == 'O' && turn % 2 == 0)
+		me_place(grid);
+	else
 	{
-		if (g_opp == 'O' && ft_strstr(line, "got (O)"))
+		while (get_next_line(0, &line))
 		{
-			line += 11;
-			row = ft_atoi(line);
-			line += ft_count_digits(row) + 2;
-			col = ft_atoi(line);
-			opp_place(grid, row, col);
+			if (ft_strstr(line, "got (O)"))
+			{
+				line += 11;
+				row = ft_atoi(line) + 1;
+				line += ft_count_digits(row) + 2;
+				col = ft_atoi(line) + 1;
+				opp_place(grid, row, col);
+			}
+			ft_printf("\n\n");
+			print_grid(grid);
+			free(line - (11 + ft_count_digits(row) + 2));
+			return ;
 		}
-		print_grid(grid);
-		free(line - (11 + ft_count_digits(row) + 2));
-		return ;
 	}
+}
+
+void	me_place(t_grid *grid)
+{
+	(void)grid;
 }
 
 void	opp_place(t_grid *grid, int row, int col)
@@ -55,19 +68,16 @@ void	opp_place(t_grid *grid, int row, int col)
 
 	col_start = col;
 	i = -1;
-	while (++i < grid->piece_row)
+	while (++i < (grid->piece_row))
 	{
-		j = -1;
+		j = 0;
 		col = col_start;
-		while (j++ < grid->piece_col)
+		while (j < (grid->piece_col))
 		{
-			if (grid->piece[i][j++] == 0)
-				col++;
-			else
-			{
-				grid->map[row][col++] = g_opp_min;
-				j++;
-			}
+			if (grid->piece[i][j] != 0)
+				grid->map[row][col] = g_opp_min;
+			j++;
+			col++;
 		}
 		row++;
 	}

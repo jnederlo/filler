@@ -6,7 +6,7 @@
 /*   By: jnederlo <jnederlo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/31 14:16:12 by jnederlo          #+#    #+#             */
-/*   Updated: 2017/08/02 12:18:24 by jnederlo         ###   ########.fr       */
+/*   Updated: 2017/08/02 17:07:09 by jnederlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@ t_last	*init_last(char *line, t_grid *grid)
 			i = 0;
 			while (line[i])
 			{
-				line[i] == 'O' ? last->col_O = i - 4 : 0;
-				line[i] == 'O' ? last->row_O = row : 0;
-				line[i] == 'X' ? last->col_X = i - 4: 0;
-				line[i] == 'X' ? last->row_X = row : 0;
+				line[i] == 'O' ? last->col_O = i - 3 : 0;
+				line[i] == 'O' ? last->row_O = row + 1 : 0;
+				line[i] == 'X' ? last->col_X = i - 3: 0;
+				line[i] == 'X' ? last->row_X = row + 1 : 0;
 				i++;
 			}
 		}

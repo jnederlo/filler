@@ -6,7 +6,7 @@
 /*   By: jnederlo <jnederlo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/29 13:02:00 by jnederlo          #+#    #+#             */
-/*   Updated: 2017/08/02 14:38:22 by jnederlo         ###   ########.fr       */
+/*   Updated: 2017/08/02 15:10:59 by jnederlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ char				g_opp;
 char				g_me;
 long long int		g_opp_min;
 long long int		g_me_max;
+int					turn;
 
 /*
 **	Functions in ft_filler.c
@@ -66,6 +67,7 @@ void				set_player(char *line);
 void				set_piece(char *line, t_grid *grid);
 void				init_piece(char *line, t_grid *grid, int i, int row);
 void				opp_place(t_grid *grid, int row, int col);
+void				me_place(t_grid *grid);
 
 /*
 **	Functions in setup.c
