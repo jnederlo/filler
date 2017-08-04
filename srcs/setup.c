@@ -6,7 +6,7 @@
 /*   By: jnederlo <jnederlo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/31 14:16:12 by jnederlo          #+#    #+#             */
-/*   Updated: 2017/08/02 17:07:09 by jnederlo         ###   ########.fr       */
+/*   Updated: 2017/08/03 15:16:42 by jnederlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,8 @@ t_last	*init_last(char *line, t_grid *grid)
 		}
 		row++;
 	}
-	free(line);
-	ft_printf("last O = (%d, %d)\n", last->row_O, last->col_O);
-	ft_printf("last X = (%d, %d)\n", last->row_X, last->col_X);
+	// ft_printf("last O = (%d, %d)\n", last->row_O, last->col_O);
+	// ft_printf("last X = (%d, %d)\n", last->row_X, last->col_X);
 	return (last);
 }
 
@@ -58,7 +57,7 @@ void	init_map(t_grid *grid, t_last *last)
 	init_rows_cols(grid);
 	fibonacci(row, col, grid);
 	init_players(grid, last);
-	print_grid(grid);
+	// print_grid(grid);
 }
 
 void	init_rows_cols(t_grid *grid)
@@ -67,7 +66,7 @@ void	init_rows_cols(t_grid *grid)
 	grid->last_col = grid->n_cols + 1;
 	grid->mid_row = grid->n_rows % 2 ? grid->n_rows / 2 + 1 : grid->n_rows / 2;
 	grid->mid_col = grid->n_cols % 2 ? grid->n_cols / 2 + 1 : grid->n_cols / 2;
-	ft_printf("mid (row, col) = (%d, %d)\n", grid->mid_row, grid->mid_col);
+	// ft_printf("mid (row, col) = (%d, %d)\n", grid->mid_row, grid->mid_col);
 }
 
 void	fibonacci(int row, int col, t_grid *grid)
@@ -109,4 +108,9 @@ void	init_players(t_grid *grid, t_last *last)
 		grid->map[last->row_O][last->col_O] = g_me_max;
 		grid->map[last->row_X][last->col_X] = g_opp_min;
 	}
+	// ft_printf("opp = %c, me = %c\n", g_opp, g_me);
+	// ft_printf("g_opp_min = %lld\n", g_opp_min);
+	// ft_printf("g_me_max = %lld\n", g_me_max);
+	// ft_printf("g_opp_num = %d\n", g_opp_num);
+	// ft_printf("g_me_num = %d\n", g_me_num);
 }

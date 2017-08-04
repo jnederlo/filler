@@ -6,7 +6,7 @@
 /*   By: jnederlo <jnederlo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/29 13:02:00 by jnederlo          #+#    #+#             */
-/*   Updated: 2017/08/02 19:49:53 by jnederlo         ###   ########.fr       */
+/*   Updated: 2017/08/03 15:40:52 by jnederlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ typedef struct		s_grid
 	long long int	**piece;
 	int				piece_row;
 	int				piece_col;
+	int				top_row;
+	int				top_col;
 	t_last			*last;
 }					t_grid;
 
@@ -69,8 +71,11 @@ void				set_player(char *line);
 void				set_piece(char *line, t_grid *grid);
 void				init_piece(char *line, t_grid *grid, int i, int row);
 void				opp_place(t_grid *grid, int row, int col);
-void				me_place(t_grid *grid);
+void				me_piece(t_grid *grid);
 void				clear_piece(t_grid *grid);
+int					valid_place(t_grid *grid, int map_row, int map_col);
+int					place_value(t_grid *grid, int map_row, int map_col);
+void				me_place(t_grid *grid);
 
 /*
 **	Functions in setup.c

@@ -6,7 +6,7 @@
 #    By: jnederlo <jnederlo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/07/31 14:23:31 by jnederlo          #+#    #+#              #
-#    Updated: 2017/08/02 14:11:33 by jnederlo         ###   ########.fr        #
+#    Updated: 2017/08/03 16:21:52 by jnederlo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,7 +52,7 @@ $(NAME): $(OBJECTS)
 	$(MESS_BLANK)
 	$(MESS_EXEC)
 	$(MESS_BLANK)
-	@$(CC) -o $@ $(FLAGS) $(OBJECTS) -L $(LIBRARY) -lft -fsanitize=address
+	@$(CC) -o $@ $(FLAGS) $(OBJECTS) -L $(LIBRARY) -lft
 	$(MESS_SUCCESS)
 	$(MESS_BLANK)
 
@@ -60,4 +60,4 @@ build:
 	@mkdir build/
 
 build/%.o: srcs/%.c | build
-	@$(CC) $(FLAGS) -c $< -o $@ -g
+	@$(CC) $(FLAGS) -c $< -o $@
