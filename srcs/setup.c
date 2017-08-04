@@ -6,43 +6,41 @@
 /*   By: jnederlo <jnederlo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/31 14:16:12 by jnederlo          #+#    #+#             */
-/*   Updated: 2017/08/03 15:16:42 by jnederlo         ###   ########.fr       */
+/*   Updated: 2017/08/03 20:37:46 by jnederlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 
-t_last	*init_last(char *line, t_grid *grid)
-{
-	t_last	*last;
-	int		i;
-	int		row;
+// t_last	*init_last(char *line, t_grid *grid)
+// {
+// 	t_last	*last;
+// 	int		i;
+// 	int		row;
 
-	last = ft_memalloc(sizeof(t_last));
-	row = -1;
-	while(row < grid->n_rows)
-	{
-		get_next_line(0, &line);
-		if (ft_strstr(line, "O") || ft_strstr(line, "X"))
-		{
-			i = 0;
-			while (line[i])
-			{
-				line[i] == 'O' ? last->col_O = i - 3 : 0;
-				line[i] == 'O' ? last->row_O = row + 1 : 0;
-				line[i] == 'X' ? last->col_X = i - 3: 0;
-				line[i] == 'X' ? last->row_X = row + 1 : 0;
-				i++;
-			}
-		}
-		row++;
-	}
-	// ft_printf("last O = (%d, %d)\n", last->row_O, last->col_O);
-	// ft_printf("last X = (%d, %d)\n", last->row_X, last->col_X);
-	return (last);
-}
+// 	last = ft_memalloc(sizeof(t_last));
+// 	row = -1;
+// 	while(row < grid->n_rows)
+// 	{
+// 		get_next_line(0, &line);
+// 		if (ft_strchr(line, g_me))
+// 		{
+// 			i = 0;
+// 			while (line[i])
+// 			{
+// 				line[i] == g_me ? last->col = i - 3 : 0;
+// 				line[i] == g_me ? last->row = row + 1 : 0;
+// 				i++;
+// 			}
+// 		}
+// 		row++;
+// 	}
+// 	// ft_printf("last O = (%d, %d)\n", last->row_O, last->col_O);
+// 	// ft_printf("last X = (%d, %d)\n", last->row_X, last->col_X);
+// 	return (last);
+// }
 
-void	init_map(t_grid *grid, t_last *last)
+void	init_map(t_grid *grid)
 {
 	int	row;
 	int	col;
@@ -56,7 +54,7 @@ void	init_map(t_grid *grid, t_last *last)
 	row = 0;
 	init_rows_cols(grid);
 	fibonacci(row, col, grid);
-	init_players(grid, last);
+	init_players(grid);
 	// print_grid(grid);
 }
 
@@ -94,20 +92,11 @@ void	fibonacci(int row, int col, t_grid *grid)
 	}
 }
 
-void	init_players(t_grid *grid, t_last *last)
+void	init_players(t_grid *grid)
 {
 	g_opp_min = -1 * (grid->n_rows * grid->n_rows) * (grid->n_cols * grid->n_cols);
 	g_me_max = grid->map[grid->mid_row][grid->mid_col] + 1;
-	if (g_opp == 'O')
-	{
-		grid->map[last->row_O][last->col_O] = g_opp_min;
-		grid->map[last->row_X][last->col_X] = g_me_max;
-	}
-	else
-	{
-		grid->map[last->row_O][last->col_O] = g_me_max;
-		grid->map[last->row_X][last->col_X] = g_opp_min;
-	}
+	// grid->map[last->row][last->col] = g_me_max;
 	// ft_printf("opp = %c, me = %c\n", g_opp, g_me);
 	// ft_printf("g_opp_min = %lld\n", g_opp_min);
 	// ft_printf("g_me_max = %lld\n", g_me_max);

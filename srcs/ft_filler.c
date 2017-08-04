@@ -6,7 +6,7 @@
 /*   By: jnederlo <jnederlo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/29 12:29:22 by jnederlo          #+#    #+#             */
-/*   Updated: 2017/08/03 16:47:47 by jnederlo         ###   ########.fr       */
+/*   Updated: 2017/08/03 20:37:53 by jnederlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,27 +17,15 @@ int	main()
 {
 	t_grid	*grid;
 	char	*line;
-	int		i;
+	// int		i;
 
-	// printf("%d, %d\n", 12, 13);
-	// return (0);
-	turn = 1;
-	i = 0;
-	grid = setup();
-	get_next_line(0, &line);
-	set_piece(line, grid);
-	while (turn < 3)
+	// i = 0;
+	grid = setup(&line);
+	while (1)
 	{
 		update_map(grid);
-		turn++;
-		while (i < (grid->last_row + 2))
-		{
-			get_next_line(0, &line);
-			if (ft_strstr(line, "Piece"))
-				set_piece(line, grid);
-			i++;
-		}
-		// clear_piece(grid);
+		set_piece(line, grid);
+		// i++;
 	}
 	return (0);
 }
@@ -61,27 +49,24 @@ void	update_map(t_grid *grid)
 	int		row;
 	int		col;
 
-	row = 0;
-	if ((g_opp_num == 2 && (turn % 2 == 0)) || (g_opp_num == 1 && turn % 2))
+	row = -2;
+	while (row < grid->n_rows)
 	{
-		while (get_next_line(0, &line))
+		get_next_line(0, &line);
+		col = 0;
+		// ft_printf("line in update map = %s\n", line);
+		while (line[col])
 		{
-			if (ft_strstr(line, "got"))
-			{
-				line += 11;
-				row = ft_atoi(line) + 1;
-				line += ft_count_digits(row) + 2;
-				col = ft_atoi(line) + 1;
-				opp_place(grid, row, col);
-				// print_grid(grid);
-				return ;
-			}
+			if (line[col] == g_opp || line[col] == (g_opp + 32))
+				grid->map[row + 1][col - 3] = g_opp_min;
+			else if (line[col] == g_me || line[col] == (g_me + 32))
+				grid->map[row + 1][col - 3] = g_me_max;
+			col++;
 		}
+		row++;
 	}
-	else
-	{
-		me_piece(grid);
-	}
+	// print_grid(grid);
+	me_piece(grid);
 }
 
 void	me_piece(t_grid *grid)
@@ -225,27 +210,31 @@ void	opp_place(t_grid *grid, int row, int col)
 **	then I will find the line with "Plateau", and set the num of
 **	rows and cols for my map.
 */
-t_grid	*setup()
+t_grid	*setup(char **line)
 {
-	char	*line;
 	int		i;
 	t_grid	*grid;
-	t_last	*last;
+	// char	*line;
+	// t_last	*last;
 
 	i = 0;
 	grid = ft_memalloc(sizeof(t_grid));
-	while (get_next_line(0, &line))
+	while (get_next_line(0, line))
 	{
-		set_player(line);//sets the player
-		if (ft_strstr(line, "Plateau"))
+		set_player(*line);//sets the player
+		if (ft_strstr(*line, "Plateau"))
 		{
-			i += 8;
-			grid->n_rows = ft_atoi(&line[i]);
-			i += ft_count_digits(grid->n_rows) + 1;
-			grid->n_cols = ft_atoi(&line[i]);
+			(*line) += 8;
+			grid->n_rows = ft_atoi(*line);
+			(*line) += ft_count_digits(grid->n_rows) + 1;
+			grid->n_cols = ft_atoi(*line);
 			// ft_printf("(rows, cols) = (%d, %d)\n", grid->n_rows, grid->n_cols);
-			last = init_last(line, grid);//sets the starting coords.
-			init_map(grid, last);
+			// last = init_last(line, grid);//sets the starting coords.
+			init_map(grid);
+		}
+		if (ft_strstr(*line, "Piece"))
+		{
+			set_piece(*line, grid);
 			return (grid);
 		}
 	}
@@ -276,21 +265,11 @@ void	init_piece(char *line, t_grid *grid, int i, int row)
 	{
 		i = 0;
 		get_next_line(0, &line);
-		if ((g_me_num == 2 && (turn % 2 == 0)) || (g_me_num == 1 && turn % 2))
+		// ft_printf("line in init piece = %s\n", line);
+		while (line[i])
 		{
-			while (line[i])
-			{
-				grid->piece[row][i] = line[i] == '.' ? 0 : g_me_max;
-				i++;
-			}
-		}
-		else
-		{
-			while (line[i])
-			{
-				grid->piece[row][i] = line[i] == '.' ? 0 : g_opp_min;
-				i++;
-			}
+			grid->piece[row][i] = line[i] == '.' ? 0 : g_me_max;
+			i++;
 		}
 		row++;
 	}
@@ -301,7 +280,7 @@ void	init_piece(char *line, t_grid *grid, int i, int row)
 
 void	set_player(char *line)
 {
-	if (ft_strstr(line, "jarvis.filler"))//set string to whatever I call my exec.
+	if (ft_strstr(line, "filler"))//set string to whatever I call my exec.
 	{
 		g_opp = (ft_strstr(line, "p1")) ? 'X' : 'O';
 		g_me = (ft_strstr(line, "p1")) ? 'O' : 'X';

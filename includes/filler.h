@@ -6,7 +6,7 @@
 /*   By: jnederlo <jnederlo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/29 13:02:00 by jnederlo          #+#    #+#             */
-/*   Updated: 2017/08/03 15:40:52 by jnederlo         ###   ########.fr       */
+/*   Updated: 2017/08/03 19:40:00 by jnederlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,11 @@
 # include "../libft/includes/libft.h"
 # include "../libft/includes/ft_printf.h"
 
-typedef struct		s_last
-{
-	int	row_O;
-	int	col_O;
-	int	row_X;
-	int	col_X;
-}					t_last;
+// typedef struct		s_last
+// {
+// 	int	row;
+// 	int	col;
+// }					t_last;
 
 typedef struct		s_grid
 {
@@ -38,15 +36,14 @@ typedef struct		s_grid
 	int				piece_col;
 	int				top_row;
 	int				top_col;
-	t_last			*last;
 }					t_grid;
 
-typedef struct		s_filler
-{
-	t_grid	*grid;
-	t_last	*last;
-	char	**piece;
-}					t_filler;
+// typedef struct		s_filler
+// {
+// 	t_grid	*grid;
+// 	t_last	*last;
+// 	char	**piece;
+// }					t_filler;
 
 /*
 **	These are global variables:
@@ -65,7 +62,7 @@ int					turn;
 **	(includes the main())
 */
 
-t_grid				*setup();
+t_grid				*setup(char **line);
 void				update_map(t_grid *grid);
 void				set_player(char *line);
 void				set_piece(char *line, t_grid *grid);
@@ -81,11 +78,11 @@ void				me_place(t_grid *grid);
 **	Functions in setup.c
 */
 
-t_last				*init_last(char *line, t_grid *grid);
-void				init_map(t_grid *grid, t_last *last);
+// t_last				*init_last(char *line, t_grid *grid);
+void				init_map(t_grid *grid);
 void				init_rows_cols(t_grid *grid);
 void				fibonacci(int row, int col, t_grid *grid);
-void				init_players(t_grid *grid, t_last *last);
+void				init_players(t_grid *grid);
 
 /*
 **	Functions in fibonacci.c

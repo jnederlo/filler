@@ -6,11 +6,11 @@
 #    By: jnederlo <jnederlo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/07/31 14:23:31 by jnederlo          #+#    #+#              #
-#    Updated: 2017/08/03 16:21:52 by jnederlo         ###   ########.fr        #
+#    Updated: 2017/08/03 18:30:52 by jnederlo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME		=	jarvis.filler
+NAME		=	filler
 CC			=	gcc
 FLAGS		=	-Wall -Werror -Wextra -I includes
 LIBRARY		=	libft
