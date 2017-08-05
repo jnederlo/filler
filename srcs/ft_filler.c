@@ -6,7 +6,7 @@
 /*   By: jnederlo <jnederlo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/29 12:29:22 by jnederlo          #+#    #+#             */
-/*   Updated: 2017/08/03 20:37:53 by jnederlo         ###   ########.fr       */
+/*   Updated: 2017/08/04 22:50:22 by jnederlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,17 @@ int	main()
 	char	*line;
 	// int		i;
 
+	turn = 1;
 	// i = 0;
 	grid = setup(&line);
 	while (1)
 	{
-		update_map(grid);
-		set_piece(line, grid);
+		// ft_printf("line in main = %s\n", line);
+		update_map(grid, &line);
+		// print_grid(grid);
+		// set_piece(&line, grid);
 		// i++;
+		turn++;
 	}
 	return (0);
 }
@@ -43,29 +47,33 @@ void	clear_piece(t_grid *grid)
 	free(grid->piece);
 }
 
-void	update_map(t_grid *grid)
+void	update_map(t_grid *grid, char **line)
 {
-	char	*line;
+	// char	*line;
 	int		row;
 	int		col;
 
-	row = -2;
+	row = -1;
+	if (turn > 1)
+		get_next_line(0, line);
 	while (row < grid->n_rows)
 	{
-		get_next_line(0, &line);
+		get_next_line(0, line);
 		col = 0;
-		// ft_printf("line in update map = %s\n", line);
-		while (line[col])
+		// ft_printf("line in update map = %s\n", *line);
+		while (line[0][col])
 		{
-			if (line[col] == g_opp || line[col] == (g_opp + 32))
+			if (line[0][col] == g_opp || line[0][col] == (g_opp + 32))
 				grid->map[row + 1][col - 3] = g_opp_min;
-			else if (line[col] == g_me || line[col] == (g_me + 32))
+			else if (line[0][col] == g_me || line[0][col] == (g_me + 32))
 				grid->map[row + 1][col - 3] = g_me_max;
 			col++;
 		}
 		row++;
 	}
+	get_next_line(0, line);
 	// print_grid(grid);
+	set_piece(line, grid);
 	me_piece(grid);
 }
 
@@ -96,7 +104,7 @@ void	me_piece(t_grid *grid)
 		}
 		map_row++;
 	}
-	ft_printf("%d %d\n", grid->top_row - 1, grid->top_col - 1);
+	ft_printf("%d %d\n", grid->top_row - 1, grid->top_col - 1);// -1 -1
 	me_place(grid);
 	// ft_printf("\n\n");
 	// print_grid(grid);
@@ -231,31 +239,33 @@ t_grid	*setup(char **line)
 			// ft_printf("(rows, cols) = (%d, %d)\n", grid->n_rows, grid->n_cols);
 			// last = init_last(line, grid);//sets the starting coords.
 			init_map(grid);
+			(*line) -= (8 + ft_count_digits(grid->n_rows) + 1);
+			return(grid);
 		}
-		if (ft_strstr(*line, "Piece"))
-		{
-			set_piece(*line, grid);
-			return (grid);
-		}
+		// if (ft_strstr(*line, "Piece"))
+		// {
+		// 	set_piece(*line, grid);
+		// 	return (grid);
+		// }
 	}
 	return (grid);
 }
 
-void	set_piece(char *line, t_grid *grid)
+void	set_piece(char **line, t_grid *grid)
 {
 	int	i;
 	int	row;
 
 	i = 6;
 	row = -1;
-	grid->piece_row = ft_atoi(&line[i]);
+	grid->piece_row = ft_atoi(&line[0][i]);
 	i += ft_count_digits(grid->piece_row) + 1;
-	grid->piece_col = ft_atoi(&line[i]);
+	grid->piece_col = ft_atoi(&line[0][i]);
 	grid->piece = malloc(sizeof(long long *) * grid->piece_row);
 	ft_bzero(grid->piece, grid->piece_row);
 	while (row++ < grid->piece_row)
 		grid->piece[row] = ft_memalloc(sizeof(long long) * grid->piece_col);
-	init_piece(line, grid, i, row);
+	init_piece(*line, grid, i, row);
 }
 
 void	init_piece(char *line, t_grid *grid, int i, int row)

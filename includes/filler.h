@@ -6,7 +6,7 @@
 /*   By: jnederlo <jnederlo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/29 13:02:00 by jnederlo          #+#    #+#             */
-/*   Updated: 2017/08/03 19:40:00 by jnederlo         ###   ########.fr       */
+/*   Updated: 2017/08/04 22:09:21 by jnederlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,9 @@ int					turn;
 */
 
 t_grid				*setup(char **line);
-void				update_map(t_grid *grid);
+void				update_map(t_grid *grid, char **line);
 void				set_player(char *line);
-void				set_piece(char *line, t_grid *grid);
+void				set_piece(char **line, t_grid *grid);
 void				init_piece(char *line, t_grid *grid, int i, int row);
 void				opp_place(t_grid *grid, int row, int col);
 void				me_piece(t_grid *grid);
