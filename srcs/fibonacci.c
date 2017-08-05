@@ -6,7 +6,7 @@
 /*   By: jnederlo <jnederlo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/02 10:57:26 by jnederlo          #+#    #+#             */
-/*   Updated: 2017/08/02 11:01:18 by jnederlo         ###   ########.fr       */
+/*   Updated: 2017/08/05 14:26:59 by jnederlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,13 @@ long long int		fib_border(int row, int col, t_grid *grid)
 	last_row = grid->last_row;
 	last_col = grid->last_col;
 	edge = -1 * (grid->n_rows * grid->n_rows) * (grid->n_cols * grid->n_cols);
-	if (row == 0 || col == 0 || row == last_row || col == last_col)
+	if (row < grid->start_row || col < grid->start_col
+			|| row >= last_row || col >= last_col)
 		return (edge);
-	else if (row == 1 || col == 1 || row == 2 || col == 2 || row == last_row - 1
-			|| row == last_row - 2 || col == last_col - 1 || col == last_col - 2)
+	else if (row == grid->start_row || col == grid->start_col
+			|| row == (grid->start_row + 1) || col == (grid->start_col + 1)
+			|| row == (last_row - 1) || row == (last_row - 2)
+			|| col == (last_col - 1) || col == (last_col - 2))
 		return (1);
 	else
 		return (0);

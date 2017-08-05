@@ -6,7 +6,7 @@
 /*   By: jnederlo <jnederlo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/31 14:16:12 by jnederlo          #+#    #+#             */
-/*   Updated: 2017/08/03 20:37:46 by jnederlo         ###   ########.fr       */
+/*   Updated: 2017/08/05 15:54:03 by jnederlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,51 +45,58 @@ void	init_map(t_grid *grid)
 	int	row;
 	int	col;
 
-	row = -1;
-	col = 0;
-	grid->map = malloc(sizeof(long long int *) * (grid->n_rows + 2));
-	ft_bzero(grid->map, grid->n_rows + 2);
-	while (row++ < (grid->n_rows + 2))
-		grid->map[row] = ft_memalloc(sizeof(long long) * (grid->n_cols + 2));
 	row = 0;
+	col = 0;
+	grid->map = malloc(sizeof(long long int *) * (grid->n_rows + 30));
+	ft_bzero(grid->map, grid->n_rows + 30);
+	while (row < (grid->n_rows + 30))
+	{
+		grid->map[row] = ft_memalloc(sizeof(long long) * (grid->n_cols + 30));
+		row++;
+	}
 	init_rows_cols(grid);
 	fibonacci(row, col, grid);
 	init_players(grid);
-	// print_grid(grid);
 }
 
 void	init_rows_cols(t_grid *grid)
 {
-	grid->last_row = grid->n_rows + 1;
-	grid->last_col = grid->n_cols + 1;
-	grid->mid_row = grid->n_rows % 2 ? grid->n_rows / 2 + 1 : grid->n_rows / 2;
-	grid->mid_col = grid->n_cols % 2 ? grid->n_cols / 2 + 1 : grid->n_cols / 2;
+	grid->start_row = 10;
+	grid->start_col = 10;
+	grid->last_row = grid->start_row + grid->n_rows;
+	grid->last_col = grid->start_col + grid->n_cols;
+	grid->mid_row = grid->n_rows % 2 ? (grid->start_row + grid->n_rows / 2) + 1 : grid->start_row + grid->n_rows / 2;
+	grid->mid_col = grid->n_cols % 2 ? (grid->start_col + grid->n_cols / 2) + 1 : grid->start_col + grid->n_cols / 2;
+	// ft_printf("start (row, col) = (%d, %d)\n", grid->start_row, grid->start_col);
+	// ft_printf("last (row, col) = (%d, %d)\n", grid->last_row, grid->last_col);
 	// ft_printf("mid (row, col) = (%d, %d)\n", grid->mid_row, grid->mid_col);
 }
 
 void	fibonacci(int row, int col, t_grid *grid)
 {
-	while (row < (grid->n_rows + 2))
+	row = 0;
+	while (row < (grid->n_rows + 30))
 	{
 		col = 0;
-		while (col < (grid->n_cols + 2))
+		while (col < (grid->n_cols + 30))
 		{
 			grid->map[row][col] = fib_border(row, col, grid);
 			col++;
 		}
 		row++;
 	}
-	row = 3;
-	while (row < (grid->n_rows - 1))
+	row = 2 + grid->start_row;
+	while (row < (grid->last_row - 2))
 	{
-		col = 3;
-		while (col < (grid->n_cols - 1))
+		col = 2 + grid->start_col;
+		while (col < (grid->last_col - 2))
 		{
 			grid->map[row][col] = fib_filler(row, col, grid);
 			col++;
 		}
 		row++;
 	}
+	// print_grid(grid);
 }
 
 void	init_players(t_grid *grid)

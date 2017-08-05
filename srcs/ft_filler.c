@@ -6,7 +6,7 @@
 /*   By: jnederlo <jnederlo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/29 12:29:22 by jnederlo          #+#    #+#             */
-/*   Updated: 2017/08/04 22:50:22 by jnederlo         ###   ########.fr       */
+/*   Updated: 2017/08/05 16:17:47 by jnederlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,16 @@ int	main()
 {
 	t_grid	*grid;
 	char	*line;
-	// int		i;
+	int		i;
 
 	turn = 1;
-	// i = 0;
+	i = 0;
 	grid = setup(&line);
 	while (1)
 	{
 		// ft_printf("line in main = %s\n", line);
 		update_map(grid, &line);
+		clear_piece(grid);
 		// print_grid(grid);
 		// set_piece(&line, grid);
 		// i++;
@@ -64,9 +65,9 @@ void	update_map(t_grid *grid, char **line)
 		while (line[0][col])
 		{
 			if (line[0][col] == g_opp || line[0][col] == (g_opp + 32))
-				grid->map[row + 1][col - 3] = g_opp_min;
+				grid->map[grid->start_row + row][grid->start_col + col - 4] = g_opp_min;
 			else if (line[0][col] == g_me || line[0][col] == (g_me + 32))
-				grid->map[row + 1][col - 3] = g_me_max;
+				grid->map[grid->start_row + row][grid->start_col + col - 4] = g_me_max;
 			col++;
 		}
 		row++;
@@ -81,19 +82,22 @@ void	me_piece(t_grid *grid)
 {
 	int	map_row;
 	int	map_col;
-	int	pos_value;
-	int	top_val;
+	long long	pos_value;
+	long long	top_val;
 
-	map_row = 1;
+	map_row = 0;
 	pos_value = 0;
 	top_val = 0;
 	while (map_row < grid->last_row)
 	{
-		map_col = 1;
+		map_col = 0;
 		while (map_col < grid->last_col)
 		{
-			if (valid_place(grid, map_row, map_col))
+			if (valid_place(grid, map_row, map_col))//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+			{
 				pos_value = place_value(grid, map_row, map_col);
+				// printf("pos_value = %lld\n", pos_value);
+			}
 			if (pos_value > top_val)
 			{
 				grid->top_row = map_row;
@@ -104,7 +108,10 @@ void	me_piece(t_grid *grid)
 		}
 		map_row++;
 	}
-	ft_printf("%d %d\n", grid->top_row - 1, grid->top_col - 1);// -1 -1
+	// if (grid->top_row == 0 && grid->top_col ==0)
+	// 	ft_printf("%d %d\n", grid->top_row, grid->top_col);
+	// else
+	ft_printf("%d %d\n", grid->top_row - grid->start_row, grid->top_col - grid->start_col);// -1 -1
 	me_place(grid);
 	// ft_printf("\n\n");
 	// print_grid(grid);
@@ -185,6 +192,8 @@ int		valid_place(t_grid *grid, int map_row, int map_col)
 		piece_row++;
 		map_row++;
 	}
+	// if (num == 1)
+	// 	printf("num = %d\n", num);
 	if (num != 1)
 		return (0);
 	return (1);
@@ -275,6 +284,8 @@ void	init_piece(char *line, t_grid *grid, int i, int row)
 	{
 		i = 0;
 		get_next_line(0, &line);
+		if (ft_strstr(line, "Piece"))
+			return ;
 		// ft_printf("line in init piece = %s\n", line);
 		while (line[i])
 		{

@@ -6,7 +6,7 @@
 /*   By: jnederlo <jnederlo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/29 13:02:00 by jnederlo          #+#    #+#             */
-/*   Updated: 2017/08/04 22:09:21 by jnederlo         ###   ########.fr       */
+/*   Updated: 2017/08/05 15:19:36 by jnederlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ typedef struct		s_grid
 {
 	int				n_rows;
 	int				n_cols;
+	int				start_row;
+	int				start_col;
 	int				last_row;
 	int				last_col;
 	int				mid_row;
