@@ -6,7 +6,7 @@
 /*   By: jnederlo <jnederlo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/05 18:48:25 by jnederlo          #+#    #+#             */
-/*   Updated: 2017/08/05 18:56:34 by jnederlo         ###   ########.fr       */
+/*   Updated: 2017/08/05 18:59:33 by jnederlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,20 +75,20 @@ void		place_piece(t_grid *grid)
 	int	j;
 	int	col_start;
 
-	col_start = grid->top_col;
+	col_start = grid->best_col;
 	i = -1;
 	while (++i < (grid->piece_row))
 	{
 		j = 0;
-		grid->top_col = col_start;
+		grid->best_col = col_start;
 		while (j < (grid->piece_col))
 		{
 			if (grid->piece[i][j] != 0)
-				grid->map[grid->top_row][grid->top_col] = g_me_max;
+				grid->map[grid->best_row][grid->best_col] = g_me_max;
 			j++;
-			grid->top_col++;
+			grid->best_col++;
 		}
-		grid->top_row++;
+		grid->best_row++;
 	}
 
 }

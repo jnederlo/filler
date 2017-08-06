@@ -6,7 +6,7 @@
 /*   By: jnederlo <jnederlo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/29 12:29:22 by jnederlo          #+#    #+#             */
-/*   Updated: 2017/08/05 18:49:41 by jnederlo         ###   ########.fr       */
+/*   Updated: 2017/08/05 19:08:37 by jnederlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ int	main()
 	while (1)
 	{
 		update_map(grid, &line);
-		
 		clear_piece(grid);
 		turn++;
 	}

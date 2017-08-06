@@ -6,7 +6,7 @@
 /*   By: jnederlo <jnederlo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/29 13:02:00 by jnederlo          #+#    #+#             */
-/*   Updated: 2017/08/05 18:56:15 by jnederlo         ###   ########.fr       */
+/*   Updated: 2017/08/05 19:11:00 by jnederlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,10 @@ typedef struct		s_grid
 	long long int	**piece;
 	int				piece_row;
 	int				piece_col;
-	int				top_row;
-	int				top_col;
+	int				best_row;
+	int				best_col;
+	int				X;
+	int				Y;
 }					t_grid;
 
 /*
@@ -72,6 +74,7 @@ void				fibonacci(int row, int col, t_grid *grid);
 void				init_piece(char **line, t_grid *grid);
 void				config_piece(char *line, t_grid *grid, int i, int row);
 void				take_piece(t_grid *grid);
+void				print_coord(t_grid *grid);
 
 /*
 **	Functions in take_piece.c
