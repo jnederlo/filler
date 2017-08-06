@@ -6,7 +6,7 @@
 /*   By: jnederlo <jnederlo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/29 12:29:22 by jnederlo          #+#    #+#             */
-/*   Updated: 2017/08/05 16:17:47 by jnederlo         ###   ########.fr       */
+/*   Updated: 2017/08/05 17:37:28 by jnederlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ int	main()
 {
 	t_grid	*grid;
 	char	*line;
-	int		i;
+	// int		i;
 
 	turn = 1;
-	i = 0;
+	// i = 0;
 	grid = setup(&line);
 	while (1)
 	{
@@ -82,7 +82,7 @@ void	me_piece(t_grid *grid)
 {
 	int	map_row;
 	int	map_col;
-	long long	pos_value;
+	long long int	pos_value;
 	long long	top_val;
 
 	map_row = 0;
@@ -141,11 +141,11 @@ void	me_place(t_grid *grid)
 
 }
 
-int		place_value(t_grid *grid, int map_row, int map_col)
+long long	place_value(t_grid *grid, int map_row, int map_col)
 {
 	int	piece_row;
 	int	piece_col;
-	int	pos_value;
+	long long int	pos_value;
 	int	col_start;
 
 	piece_row = 0;
@@ -155,6 +155,7 @@ int		place_value(t_grid *grid, int map_row, int map_col)
 	{
 		piece_col = 0;
 		map_col = col_start;
+		// printf("pos_value in PV = %lld\n", pos_value);
 		while (piece_col < grid->piece_col)
 		{
 			if (grid->piece[piece_row][piece_col] == g_me_max)
@@ -165,6 +166,7 @@ int		place_value(t_grid *grid, int map_row, int map_col)
 		piece_row++;
 		map_row++;
 	}
+	// printf("before return pos_value in PV = %lld\n", pos_value);
 	return (pos_value);
 }
 

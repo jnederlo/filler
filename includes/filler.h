@@ -6,7 +6,7 @@
 /*   By: jnederlo <jnederlo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/29 13:02:00 by jnederlo          #+#    #+#             */
-/*   Updated: 2017/08/05 15:19:36 by jnederlo         ###   ########.fr       */
+/*   Updated: 2017/08/05 16:42:51 by jnederlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void				opp_place(t_grid *grid, int row, int col);
 void				me_piece(t_grid *grid);
 void				clear_piece(t_grid *grid);
 int					valid_place(t_grid *grid, int map_row, int map_col);
-int					place_value(t_grid *grid, int map_row, int map_col);
+long long int		place_value(t_grid *grid, int map_row, int map_col);
 void				me_place(t_grid *grid);
 
 /*

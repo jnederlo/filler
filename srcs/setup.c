@@ -6,7 +6,7 @@
 /*   By: jnederlo <jnederlo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/31 14:16:12 by jnederlo          #+#    #+#             */
-/*   Updated: 2017/08/05 15:54:03 by jnederlo         ###   ########.fr       */
+/*   Updated: 2017/08/05 17:37:08 by jnederlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,11 @@ void	init_map(t_grid *grid)
 
 	row = 0;
 	col = 0;
-	grid->map = malloc(sizeof(long long int *) * (grid->n_rows + 30));
-	ft_bzero(grid->map, grid->n_rows + 30);
-	while (row < (grid->n_rows + 30))
+	grid->map = malloc(sizeof(long long int *) * (grid->n_rows + 100));
+	ft_bzero(grid->map, grid->n_rows + 100);
+	while (row < (grid->n_rows + 100))
 	{
-		grid->map[row] = ft_memalloc(sizeof(long long) * (grid->n_cols + 30));
+		grid->map[row] = ft_memalloc(sizeof(long long) * (grid->n_cols + 100));
 		row++;
 	}
 	init_rows_cols(grid);
@@ -75,10 +75,10 @@ void	init_rows_cols(t_grid *grid)
 void	fibonacci(int row, int col, t_grid *grid)
 {
 	row = 0;
-	while (row < (grid->n_rows + 30))
+	while (row < (grid->n_rows + 100))
 	{
 		col = 0;
-		while (col < (grid->n_cols + 30))
+		while (col < (grid->n_cols + 100))
 		{
 			grid->map[row][col] = fib_border(row, col, grid);
 			col++;
