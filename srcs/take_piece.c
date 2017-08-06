@@ -6,7 +6,7 @@
 /*   By: jnederlo <jnederlo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/05 18:48:25 by jnederlo          #+#    #+#             */
-/*   Updated: 2017/08/05 18:59:33 by jnederlo         ###   ########.fr       */
+/*   Updated: 2017/08/05 23:09:53 by jnederlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ int			is_valid(t_grid *grid, int map_row, int map_col)
 		map_col = col_start;
 		while (piece_col < grid->piece_col)
 		{
+			if (grid->map[map_row][map_col] < 0 && grid->piece[piece_row][piece_col] == g_me_max)
+				return (0);
 			if (grid->map[map_row][map_col] == g_me_max &&
 					grid->piece[piece_row][piece_col] == g_me_max)
 				num++;
@@ -69,26 +71,25 @@ long long	place_value(t_grid *grid, int map_row, int map_col)
 	return (pos_value);
 }
 
-void		place_piece(t_grid *grid)
-{
-	int	i;
-	int	j;
-	int	col_start;
+// void		place_piece(t_grid *grid)
+// {
+// 	int	i;
+// 	int	j;
+// 	int	col_start;
 
-	col_start = grid->best_col;
-	i = -1;
-	while (++i < (grid->piece_row))
-	{
-		j = 0;
-		grid->best_col = col_start;
-		while (j < (grid->piece_col))
-		{
-			if (grid->piece[i][j] != 0)
-				grid->map[grid->best_row][grid->best_col] = g_me_max;
-			j++;
-			grid->best_col++;
-		}
-		grid->best_row++;
-	}
-
-}
+// 	col_start = grid->best_col;
+// 	i = -1;
+// 	while (++i < (grid->piece_row))
+// 	{
+// 		j = 0;
+// 		grid->best_col = col_start;
+// 		while (j < (grid->piece_col))
+// 		{
+// 			if (grid->piece[i][j] != 0)
+// 				grid->map[grid->best_row][grid->best_col] = g_me_max;
+// 			j++;
+// 			grid->best_col++;
+// 		}
+// 		grid->best_row++;
+// 	}
+// }

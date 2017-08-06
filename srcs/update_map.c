@@ -6,7 +6,7 @@
 /*   By: jnederlo <jnederlo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/05 18:44:27 by jnederlo          #+#    #+#             */
-/*   Updated: 2017/08/05 19:12:02 by jnederlo         ###   ########.fr       */
+/*   Updated: 2017/08/05 23:18:51 by jnederlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,17 @@ void	init_piece(char **line, t_grid *grid)
 	int	row;
 
 	i = 6;
-	row = -1;
+	row = 0;
 	grid->piece_row = ft_atoi(&line[0][i]);
 	i += ft_count_digits(grid->piece_row) + 1;
 	grid->piece_col = ft_atoi(&line[0][i]);
 	grid->piece = malloc(sizeof(long long *) * grid->piece_row);
 	ft_bzero(grid->piece, grid->piece_row);
-	while (row++ < grid->piece_row)
+	while (row < grid->piece_row)
+	{
 		grid->piece[row] = ft_memalloc(sizeof(long long) * grid->piece_col);
+		row++;
+	}
 	config_piece(*line, grid, i, row);
 }
 
@@ -63,7 +66,10 @@ void	take_piece(t_grid *grid)
 		while (map_col < grid->last_col)
 		{
 			if (is_valid(grid, map_row, map_col))
+			{
 				pos_value = place_value(grid, map_row, map_col);
+				// printf("pos_value = %lld\n", pos_value);
+			}
 			if (pos_value > best_val)
 			{
 				grid->best_row = map_row;
@@ -75,12 +81,12 @@ void	take_piece(t_grid *grid)
 		map_row++;
 	}
 	print_coord(grid);
-	place_piece(grid);
+	// place_piece(grid);
 }
 
 void	print_coord(t_grid *grid)
 {
-	grid->X = grid->best_row - grid->start_row;
-	grid->Y = grid->best_col - grid->start_col;
+	grid->X = grid->best_row - 1;
+	grid->Y = grid->best_col - 1;
 	ft_printf("%d %d\n", grid->X, grid->Y);
 }

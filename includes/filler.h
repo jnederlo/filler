@@ -6,7 +6,7 @@
 /*   By: jnederlo <jnederlo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/29 13:02:00 by jnederlo          #+#    #+#             */
-/*   Updated: 2017/08/05 19:11:00 by jnederlo         ###   ########.fr       */
+/*   Updated: 2017/08/05 21:41:56 by jnederlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void				set_player(char *line);
 void				init_map(t_grid *grid);
 void				init_rows_cols(t_grid *grid);
 void				fibonacci(int row, int col, t_grid *grid);
+void				middle(t_grid *grid);
 
 /*
 **	Functions in update_map.c

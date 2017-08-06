@@ -6,17 +6,17 @@
 /*   By: jnederlo <jnederlo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/29 12:29:22 by jnederlo          #+#    #+#             */
-/*   Updated: 2017/08/05 19:08:37 by jnederlo         ###   ########.fr       */
+/*   Updated: 2017/08/05 23:20:21 by jnederlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
-#include <stdio.h>
 
 int	main()
 {
 	t_grid	*grid;
 	char	*line;
+	// int		i = 0;
 
 	turn = 1;
 	grid = setup(&line);
@@ -25,6 +25,7 @@ int	main()
 		update_map(grid, &line);
 		clear_piece(grid);
 		turn++;
+		// i++;
 	}
 	return (0);
 }
@@ -50,7 +51,6 @@ t_grid	*setup(char **line)
 
 void	update_map(t_grid *grid, char **line)
 {
-	// char	*line;
 	int		row;
 	int		col;
 
@@ -64,9 +64,9 @@ void	update_map(t_grid *grid, char **line)
 		while (line[0][col])
 		{
 			if (line[0][col] == g_opp || line[0][col] == (g_opp + 32))
-				grid->map[grid->start_row + row][grid->start_col + col - 4] = g_opp_min;
+				grid->map[row + 1][col - 3] = g_opp_min;
 			else if (line[0][col] == g_me || line[0][col] == (g_me + 32))
-				grid->map[grid->start_row + row][grid->start_col + col - 4] = g_me_max;
+				grid->map[row + 1][col - 3] = g_me_max;
 			col++;
 		}
 		row++;
@@ -74,6 +74,8 @@ void	update_map(t_grid *grid, char **line)
 	get_next_line(0, line);
 	init_piece(line, grid);
 	take_piece(grid);
+	// printf("\n\n");
+	// print_grid(grid);
 }
 
 void	clear_piece(t_grid *grid)
@@ -86,5 +88,7 @@ void	clear_piece(t_grid *grid)
 		free(grid->piece[i]);
 		i++;
 	}
+	grid->best_row = 0;
+	grid->best_col = 0;
 	free(grid->piece);
 }

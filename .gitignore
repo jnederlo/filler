@@ -3,3 +3,5 @@
 ._resources
 .vscode/
 resources/filler.trace
+._*
+.DS*
