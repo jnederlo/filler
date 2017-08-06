@@ -6,7 +6,7 @@
 #    By: jnederlo <jnederlo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/07/31 14:23:31 by jnederlo          #+#    #+#              #
-#    Updated: 2017/08/04 23:16:34 by jnederlo         ###   ########.fr        #
+#    Updated: 2017/08/05 18:54:47 by jnederlo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,18 +16,19 @@ FLAGS		=	-Wall -Werror -Wextra -I includes
 LIBRARY		=	libft
 LIBRARY_B	=	libft/build
 LIB_A		=	libft.a
-FILES		=	ft_filler.c \
-				setup.c \
+FILES		=	fib_q.c \
 				fibonacci.c \
-				fib_q.c \
+				ft_filler.c \
 				print_grid.c \
-
-#adding a dependency on the include files.
+				setup.c \
+				take_piece.c \
+				update_map.c \
 
 MESS_BLANK	=	@echo ""
 MESS_LIBRARY=	@echo "\033[35m\033[1m**	COMPILING LIBRARY	**\033[0m"
 MESS_SUCCESS=	@echo "\033[92m\033[1m**	Yea, Science Bitch!!	**\033[0m"
 MESS_EXEC	=	@echo "\033[1m\033[33m**	COMPILING EXECUTABLE	**\033[0m"
+
 SOURCES		=	$(addprefix srcs/, $(FILES))
 OBJECTS		=	$(addprefix build/, $(FILES:.c=.o))
 

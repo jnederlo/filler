@@ -6,39 +6,22 @@
 /*   By: jnederlo <jnederlo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/31 14:16:12 by jnederlo          #+#    #+#             */
-/*   Updated: 2017/08/05 17:37:08 by jnederlo         ###   ########.fr       */
+/*   Updated: 2017/08/05 18:42:34 by jnederlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 
-// t_last	*init_last(char *line, t_grid *grid)
-// {
-// 	t_last	*last;
-// 	int		i;
-// 	int		row;
-
-// 	last = ft_memalloc(sizeof(t_last));
-// 	row = -1;
-// 	while(row < grid->n_rows)
-// 	{
-// 		get_next_line(0, &line);
-// 		if (ft_strchr(line, g_me))
-// 		{
-// 			i = 0;
-// 			while (line[i])
-// 			{
-// 				line[i] == g_me ? last->col = i - 3 : 0;
-// 				line[i] == g_me ? last->row = row + 1 : 0;
-// 				i++;
-// 			}
-// 		}
-// 		row++;
-// 	}
-// 	// ft_printf("last O = (%d, %d)\n", last->row_O, last->col_O);
-// 	// ft_printf("last X = (%d, %d)\n", last->row_X, last->col_X);
-// 	return (last);
-// }
+void	set_player(char *line)
+{
+	if (ft_strstr(line, "filler"))
+	{
+		g_opp = (ft_strstr(line, "p1")) ? 'X' : 'O';
+		g_me = (ft_strstr(line, "p1")) ? 'O' : 'X';
+		g_opp_num = g_opp == 'O' ? 1 : 2;
+		g_me_num = g_me == 'O' ? 1 : 2;
+	}
+}
 
 void	init_map(t_grid *grid)
 {
@@ -56,7 +39,8 @@ void	init_map(t_grid *grid)
 	}
 	init_rows_cols(grid);
 	fibonacci(row, col, grid);
-	init_players(grid);
+	g_opp_min = -1 * (grid->n_rows * grid->n_rows) * (grid->n_cols * grid->n_cols);
+	g_me_max = grid->map[grid->mid_row][grid->mid_col] + 1;
 }
 
 void	init_rows_cols(t_grid *grid)
@@ -97,16 +81,4 @@ void	fibonacci(int row, int col, t_grid *grid)
 		row++;
 	}
 	// print_grid(grid);
-}
-
-void	init_players(t_grid *grid)
-{
-	g_opp_min = -1 * (grid->n_rows * grid->n_rows) * (grid->n_cols * grid->n_cols);
-	g_me_max = grid->map[grid->mid_row][grid->mid_col] + 1;
-	// grid->map[last->row][last->col] = g_me_max;
-	// ft_printf("opp = %c, me = %c\n", g_opp, g_me);
-	// ft_printf("g_opp_min = %lld\n", g_opp_min);
-	// ft_printf("g_me_max = %lld\n", g_me_max);
-	// ft_printf("g_opp_num = %d\n", g_opp_num);
-	// ft_printf("g_me_num = %d\n", g_me_num);
 }

@@ -6,7 +6,7 @@
 /*   By: jnederlo <jnederlo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/29 13:02:00 by jnederlo          #+#    #+#             */
-/*   Updated: 2017/08/05 16:42:51 by jnederlo         ###   ########.fr       */
+/*   Updated: 2017/08/05 18:56:15 by jnederlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,6 @@
 
 # include "../libft/includes/libft.h"
 # include "../libft/includes/ft_printf.h"
-
-// typedef struct		s_last
-// {
-// 	int	row;
-// 	int	col;
-// }					t_last;
 
 typedef struct		s_grid
 {
@@ -39,13 +33,6 @@ typedef struct		s_grid
 	int				top_row;
 	int				top_col;
 }					t_grid;
-
-// typedef struct		s_filler
-// {
-// 	t_grid	*grid;
-// 	t_last	*last;
-// 	char	**piece;
-// }					t_filler;
 
 /*
 **	These are global variables:
@@ -66,25 +53,33 @@ int					turn;
 
 t_grid				*setup(char **line);
 void				update_map(t_grid *grid, char **line);
-void				set_player(char *line);
-void				set_piece(char **line, t_grid *grid);
-void				init_piece(char *line, t_grid *grid, int i, int row);
-void				opp_place(t_grid *grid, int row, int col);
-void				me_piece(t_grid *grid);
 void				clear_piece(t_grid *grid);
-int					valid_place(t_grid *grid, int map_row, int map_col);
-long long int		place_value(t_grid *grid, int map_row, int map_col);
-void				me_place(t_grid *grid);
+
 
 /*
 **	Functions in setup.c
 */
 
-// t_last				*init_last(char *line, t_grid *grid);
+void				set_player(char *line);
 void				init_map(t_grid *grid);
 void				init_rows_cols(t_grid *grid);
 void				fibonacci(int row, int col, t_grid *grid);
-void				init_players(t_grid *grid);
+
+/*
+**	Functions in update_map.c
+*/
+
+void				init_piece(char **line, t_grid *grid);
+void				config_piece(char *line, t_grid *grid, int i, int row);
+void				take_piece(t_grid *grid);
+
+/*
+**	Functions in take_piece.c
+*/
+
+int					is_valid(t_grid *grid, int map_row, int map_col);
+long long int		place_value(t_grid *grid, int map_row, int map_col);
+void				place_piece(t_grid *grid);
 
 /*
 **	Functions in fibonacci.c
